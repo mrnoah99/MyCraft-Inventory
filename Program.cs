@@ -52,4 +52,20 @@ app.MapControllerRoute(
     name: "Login",
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
+app.MapControllerRoute(
+    name: "Register",
+    pattern: "{controller=Account}/{action=Register}/{id?}");
+
+app.MapControllerRoute(
+    name: "OrderItems",
+    pattern: "{controller=Inventory}/{action=OrderItems}/{id?}");
+
+app.MapControllerRoute(
+    name: "UserProfile",
+    pattern: "{controller=Account}/{action=UserProfile}/{id?}");
+
+app.MapControllerRoute(
+    name: "EmployeeProfile",
+    pattern: "{controller=Account}/{action=EmployeeProfile}/{id?}");
+
 app.Run();
