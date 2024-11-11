@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyCraft-Inventory")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+662f50c76bcb0fac7827f9447e33829300c491a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+562a9b26a02db1c6d7133b5debc9cd0df9f7f235")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyCraft-Inventory")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyCraft-Inventory")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
