@@ -1,0 +1,12 @@
+.green {
+    background-color: green;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.item-card {
+    margin-right: 20px;
+}
