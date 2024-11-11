@@ -73,7 +73,7 @@ footer {
 
 .items-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Five cards per row */
+    grid-template-columns: repeat(4, 1fr); /* Four cards per row */
     gap: 1rem; /* Adjusted gap for spacing between cards */
 }
 
