@@ -1,0 +1,6 @@
+.transaction-card {
+    width: 100%;
+    background-color: lightgray;
+    border: solid black 1px;
+    margin-bottom: 15px;
+}
