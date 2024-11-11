@@ -3019,23 +3019,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\noah\\.nuget\\packages\\": {},
+    "C:\\Users\\RAGHAV\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\noah\\Documents\\Comp4952\\MyCraft Inventory (Project)\\MyCraft-Inventory\\MyCraft-Inventory.csproj",
+      "projectUniqueName": "D:\\CST_Term4\\COMP4952 v2\\MyCraft-Inventory\\MyCraft-Inventory.csproj",
       "projectName": "MyCraft-Inventory",
-      "projectPath": "C:\\Users\\noah\\Documents\\Comp4952\\MyCraft Inventory (Project)\\MyCraft-Inventory\\MyCraft-Inventory.csproj",
-      "packagesPath": "C:\\Users\\noah\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\noah\\Documents\\Comp4952\\MyCraft Inventory (Project)\\MyCraft-Inventory\\obj\\",
+      "projectPath": "D:\\CST_Term4\\COMP4952 v2\\MyCraft-Inventory\\MyCraft-Inventory.csproj",
+      "packagesPath": "C:\\Users\\RAGHAV\\.nuget\\packages\\",
+      "outputPath": "D:\\CST_Term4\\COMP4952 v2\\MyCraft-Inventory\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\noah\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\RAGHAV\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
