@@ -1,7 +1,13 @@
-.green {
-    background-color: green;
+.item-card {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 150px;
 }
 
-.item-card {
-    margin-right: 20px;
+.col-3 {
+    width: 20%;
+}
+
+.row {
+    margin-bottom: 15px;
 }

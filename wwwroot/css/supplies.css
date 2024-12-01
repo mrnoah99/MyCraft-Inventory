@@ -11,3 +11,13 @@
 .popup.container {
     max-width: 600px;
 }
+
+.item-card {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 200px;
+}
+
+.col-3 {
+    width: 20%;
+}
