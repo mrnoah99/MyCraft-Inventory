@@ -79,7 +79,6 @@ namespace MyCraft_Inventory.Controllers
             List<CartItemViewModel> cartList = [];
             dbData.ForEach((item) => {
                 if (item.UserId == user.Id) cartList.Add(item);
-                Console.WriteLine(cartList[0].UserId);
             });
             var model = new CartHandlerCompositeModel { CartList=cartList, CartRemove=new CartItemViewModel { Description="", Name="", UserId=user.Id }, Payment=new PaymentModel { CardNumber=0, CVV=0, ExpirationDate="", FirstName="", Items=[], LastName="" }};
             return View(model);

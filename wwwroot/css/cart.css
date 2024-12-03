@@ -7,6 +7,8 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 300px;
+    margin-bottom: 50px;
 }
 
 .page-title {
@@ -21,6 +23,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-top: 20px;
 }
 
 .items-section {
@@ -54,7 +57,7 @@
 }
 
 .payment-section {
-    flex: 0 0 300px;
+    flex: 0 0 400px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -90,4 +93,14 @@
 
 .btn-primary:hover {
     background-color: #0056b3;
+}
+
+h2{
+    font-weight: bold;
+    text-align: center;
+}
+
+.item-container{
+    background-color: rgb(255, 255, 255, 0.1);
+    color: black;
 }
