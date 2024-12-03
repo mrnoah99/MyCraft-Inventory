@@ -57,7 +57,7 @@
     }
 
     @* Cart button for employees only *@
-    @if (roles.Contains("Employee") && !(ViewContext.RouteData.Values["controller"]!.ToString() == "Inventory" && ViewContext.RouteData.Values["action"]!.ToString() == "Cart"))
+    @if (!(ViewContext.RouteData.Values["controller"]!.ToString() == "Inventory" && ViewContext.RouteData.Values["action"]!.ToString() == "Cart"))
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Inventory" asp-action="Cart">Cart</a>
