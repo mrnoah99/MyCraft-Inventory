@@ -25,29 +25,40 @@ namespace MyCraft_Inventory.Controllers
         public async Task<IActionResult> Inventory()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction("Login", "Account");
+            if (user == null) {
+                TempData["Message"] = "Please log in to access this page.";
+                return RedirectToAction("Login", "Account");
+            }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
                 return View();
             } else {
+                TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
             }
         }
 
         public async Task<IActionResult> Supplies() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction("Login", "Account");
+            if (user == null) {
+                TempData["Message"] = "Please log in to access this page.";
+                return RedirectToAction("Login", "Account");
+            }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
                 return View();
             } else {
+                TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
             }
         }
 
         public async Task<IActionResult> TransactionHistory() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction("Login", "Account");
+            if (user == null) {
+                TempData["Message"] = "Please log in to access this page.";
+                return RedirectToAction("Login", "Account");
+            }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
                 TransactionObjectModel transaction1 = new TransactionObjectModel {Date = DateTime.Now, Amount = 40.99, ID = 1, IsSale = false};
@@ -57,24 +68,35 @@ namespace MyCraft_Inventory.Controllers
                 ViewBag.transactions = test;
                 return View();
             } else {
+                TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> NewItem(ProductViewModel model) {
+            if (ModelState.IsValid) {
+                var newProduct = new ProductViewModel { Name=model.Name, Description=model.Description, Price=model.Price, Quantity=model.Quantity, ID=default };
+                _context.Products.Add(newProduct);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("OrderItems", "Inventory");
+            } else {
+                return RedirectToAction("NewItem", "Employee");
+            }
+        }
+
+        [Authorize]
+        public async Task<IActionResult> NewItem() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) return RedirectToAction("Login", "Account");
+            if (user == null) {
+                TempData["Message"] = "Please log in to access this page.";
+                return RedirectToAction("Login", "Account");
+            }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                if (ModelState.IsValid) {
-                    var newProduct = new ProductViewModel { Name=model.Name, Description=model.Description, Price=model.Price, Quantity=model.Quantity, ID=default };
-                    _context.Products.Add(newProduct);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("OrderItems", "Inventory");
-                }
                 return View();
             } else {
+                TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
             }
         }

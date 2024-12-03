@@ -40,3 +40,10 @@
     </footer> *@
 </body>
 </html>
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+        @{TempData["Message"] = null;}
+    </script>
+}

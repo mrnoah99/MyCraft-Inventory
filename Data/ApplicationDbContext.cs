@@ -33,4 +33,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<ProductViewModel> Products { get; set; } = default!;
+
+    public DbSet<CartItemViewModel> CartItems { get; set; } = default!;
 }

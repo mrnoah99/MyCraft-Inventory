@@ -110,9 +110,9 @@ namespace MyCraft_Inventory.Controllers
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account"); // Redirect if user is not logged in
+            if (user == null) {
+                TempData["Message"] = "Please log in to access this page.";
+                return RedirectToAction("Login", "Account");
             }
 
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
