@@ -1,10 +1,10 @@
+@model SupplyCompositeModel
 @{
-    var items = ViewBag.items;
     bool lowStock = false;
-    int listLength = items.Capacity;
-    for (int i = 0; i < listLength - 1; i++) {
-        if (items[i].Quantity < 10) lowStock = true;
-    }
+    int listLength = Model.AllProducts.Capacity;
+    Model.AllProducts.ForEach((item) => {
+        if (item.Quantity < 10) lowStock = true;
+    });
 }
 
 <head>
@@ -18,47 +18,45 @@
         <h1>Order New Supplies</h1>
     </div>
     <div class="text-center"><input id="search" placeholder="Search..."></div>
-    @{
-        if (lowStock) {
-            <div class="popup container text-center">
-                <h2>The following items are low on stock:</h2>
-                @{
-                    for (int i = 0; i < listLength - 1; i++) {
-                        if (items[i].Quantity < 10) {
-                            <div class="row">
-                                <div class="col-12">
-                                    @items[i].Name
-                                </div>
-                            </div>
-                        }
-                    }
+    @if (lowStock) {
+        <div class="popup container text-center">
+            <h2>The following items are low on stock:</h2>
+            @foreach (var item in Model.AllProducts) {
+                if (item.Quantity < 10) {
+                    <div class="row">
+                        <div class="col-12">
+                            @item.Name
+                        </div>
+                    </div>
                 }
-            </div>
-        }
+            }
+        </div>
     }
     <div class="container">
-        @{
-            for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
-                <div class="row">
-                    @{
-                        for (int j = 0; j < Math.Min(4, listLength - 1); j++) {
-                            <div class="col-3 item-card gray">
-                                <p>Name: @items[j].Name</p>
-                                <p>Description: @items[j].Description</p>
-                                <p>Current Qty: @items[j].Quantity</p>
-                                <p>Sale Price: @items[j].Price</p>
-                                @{
-                                    if (items[j].IsInStock) {
-                                        <p>In Stock</p>
-                                    } else {
-                                        <p>Out of Stock</p>
-                                    }
-                                }
-                            </div>
+        @for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
+            <div class="row">
+                @foreach (var item in Model.AllProducts) {
+                    <div class="col-3 item-card gray">
+                        <p>Name: @item.Name</p>
+                        <p>Description: @item.Description</p>
+                        <p>Current Qty: @item.Quantity</p>
+                        <p>Sale Price: @item.Price</p>
+                        @using (Html.BeginForm("IncreaseStock", "Employee", FormMethod.Post)) {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.TextBox("Quantity", null, new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=100 })
+                            @Html.ValidationMessageFor(m => m.SuppliedProduct.Quantity, "", new { @class="text-danger" })
+                            @Html.Hidden("Name", item.Name)
+                            <button type="submit">Add Stock</button>
                         }
-                    }
-                </div>
-            }
-        }   
+                        @if (item.IsInStock) {
+                            <p>In Stock</p>
+                        } else {
+                            <p>Out of Stock</p>
+                        }
+                    </div>
+                }
+            </div>
+        } 
     </div>
 </div>

@@ -31,10 +31,10 @@
                             <span>Quantity: @item.Quantity</span><br>
                             <span class="item-desc"><em>@item.Description</em></span>
                             <span>Price: $ @item.Price / Item</span>
-                            @Html.BeginForm("RemoveFromCart", "Inventory", FormMethod.Post) {
+                            @using (Html.BeginForm("RemoveFromCart", "Inventory", FormMethod.Post)) {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.TextBoxFor(m => m.CartRemove.Quantity , new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=item.Quantity })
+                                @Html.TextBoxFor(m => m.CartRemove.Quantity, new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=item.Quantity })
                                 @Html.ValidationMessageFor(m => m.CartRemove.Quantity, "", new { @class="text-danger" })
                                 @Html.HiddenFor(m => item.Name)
                                 @Html.HiddenFor(m => item.UserId)

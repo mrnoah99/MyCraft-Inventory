@@ -1,5 +1,7 @@
+@model IEnumerable<ProductViewModel>
+
 @{
-    var items = ViewBag.items;
+    int listLength = Model.Count();
 }
 
 <head>
@@ -13,22 +15,24 @@
         <h1>Inventory Details</h1>
     </div>
     <div class="container">
-        @{
-            int listLength = items.Capacity;
-            for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
-                <div class="row">
-                    @{
-                        for (int j = 0; j < Math.Min(4, listLength - 1); j++) {
-                            <div class="col-3 item-card">
-                                <p>Name: @items[j].Name</p>
-                                <p>Description: @items[j].Description</p>
-                                <p>Price: @items[j].Price</p>
-                                <p>Qty: @items[j].Quantity</p>
-                            </div>
-                        }
-                    }
-                </div>
-            }
+        @for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
+            <div class="row">
+                @foreach (var item in Model) {
+                    <div class="col-3 item-card">
+                        <p>Name: @item.Name</p>
+                        <p>Description: @item.Description</p>
+                        <p>Price: @item.Price</p>
+                        <p>Qty: @item.Quantity</p>
+                    </div>
+                }
+            </div>
         }
     </div>
 </div>
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+        @{TempData["Message"] = null;}
+    </script>
+}
