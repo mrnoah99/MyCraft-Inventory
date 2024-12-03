@@ -63,16 +63,23 @@ namespace MyCraft_Inventory.Controllers
 
         [HttpPost]
         public async Task<IActionResult> NewItem(ProductViewModel model) {
+            if (ModelState.IsValid) {
+                var newProduct = new ProductViewModel { Name=model.Name, Description=model.Description, Price=model.Price, Quantity=model.Quantity, ID=default };
+                _context.Products.Add(newProduct);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("OrderItems", "Inventory");
+            } else {
+                return RedirectToAction("NewItem", "Employee");
+            }
+        }
+
+        [Authorize]
+        public async Task<IActionResult> NewItem() {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction("Login", "Account");
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
+
             if (isAdmin) {
-                if (ModelState.IsValid) {
-                    var newProduct = new ProductViewModel { Name=model.Name, Description=model.Description, Price=model.Price, Quantity=model.Quantity, ID=default };
-                    _context.Products.Add(newProduct);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("OrderItems", "Inventory");
-                }
                 return View();
             } else {
                 return RedirectToAction("Index", "Home");

@@ -37,11 +37,14 @@ footer {
 }
 
 .page-title {
+    text-align: center;
+    margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: bold;
-    text-align: center;
-    margin: 2rem 0 1.5rem;
-    color: #333;
+    color: #000000;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .main-content {

@@ -94,6 +94,21 @@ input[type="password"]:focus {
     border-width: 3px; /* Optional: Make the border slightly wider on focus */
 }
 
+input[type="number"] {
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: 2px solid #333; /* Increase border width and use a darker color */
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+    border-color: #000; /* Make border darker on focus */
+    border-width: 3px; /* Optional: Make the border slightly wider on focus */
+}
+
 
 .form-input{
     border-style: solid;
