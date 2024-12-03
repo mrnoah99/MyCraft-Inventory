@@ -1,0 +1,57 @@
+@model MyCraft_Inventory.Models.UserProfileViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Username's Profile</title>
+    <link rel="stylesheet" href="/css/userProfile.css" asp-append-version="true">
+</head>
+<body>
+    @* <header>
+        <nav>
+            <a href="/">MyCraft_Inventory</a>
+            <a href="/Home/Privacy">Privacy</a>
+            <span class="user-info">Hello @Model.Username!</span>
+            <a href="/Account/Logout">Logout</a>
+        </nav>
+    </header> *@
+
+    <div class="main-content">
+        <h1 class="page-title">@Model.Username's Profile</h1>
+
+        <div class="profile-section">
+            <div class="profile-info">
+                <div class="field-label">Email</div>
+                <div class="field-value">@Model.Email</div>
+
+                <div class="field-label">Username</div>
+                <div class="field-value">@Model.Username</div>
+
+                <div class="field-label">Account ID</div>
+                <div class="field-value">@Model.AccountId</div>
+
+                <div class="field-label">Role</div>
+                <div class="field-value">@Model.Role</div>
+            </div>
+        </div>
+
+        <div class="transaction-section">
+            <h2>Past Transactions</h2>
+            @foreach (var transaction in Model.Transactions)
+            {
+                <div class="transaction-card">
+                    <div class="transaction-id">@transaction.TransactionId</div>
+                    <div class="transaction-amount">$ @transaction.Amount</div>
+                    <div class="transaction-date">@transaction.Date</div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @* <footer>
+        <p>&copy; 2024 - MyCraft_Inventory - <a href="/Home/Privacy">Privacy</a></p>
+    </footer> *@
+</body>
+</html>

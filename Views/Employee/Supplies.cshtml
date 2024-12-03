@@ -1,0 +1,63 @@
+@{
+    var availableItems = ViewBag.availableItems;
+    bool lowStock = false;
+    for (int i = 0; i < availableItems.GetLength(0); i++) {
+        if (availableItems[i].Qty < 10) lowStock = true;
+    }
+}
+
+<head>
+    <link rel="stylesheet" href="/css/common.css" asp-append-version="true">
+    <link rel="stylesheet" href="/css/employee_common.css" asp-append-version="true">
+    <link rel="stylesheet" href="/css/supplies.css" asp-append-version="true">
+</head>
+
+<div>
+    <div class="text-center">
+        <h1>Order New Supplies</h1>
+    </div>
+    <div class="text-center"><input id="search" placeholder="Search..."></div>
+    @{
+        if (lowStock) {
+            <div class="popup container text-center">
+                <h2>The following items are low on stock:</h2>
+                @{
+                    for (int i = 0; i < availableItems.GetLength(0); i++) {
+                        if (availableItems[i].Qty < 10) {
+                            <div class="row">
+                                <div class="col-12">
+                                    @availableItems[i].ItemName
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        }
+    }
+    <div class="container">
+        @{
+            for (int i = 0; i < (double) Math.Ceiling(availableItems.GetLength(0) / 4.0); i++) {
+                <div class="row">
+                    @{
+                        for (int j = 0; j < Math.Min(4, availableItems.GetLength(0)); j++) {
+                            <div class="col-3 item-card gray">
+                                <p>Name: @availableItems[j].ItemName</p>
+                                <p>Description: @availableItems[j].ItemDescription</p>
+                                <p>Current Qty: @availableItems[j].Qty</p>
+                                <p>Sale Price: @availableItems[j].ItemPrice</p>
+                                @{
+                                    if (availableItems[j].InStock) {
+                                        <p>In Stock</p>
+                                    } else {
+                                        <p>Out of Stock</p>
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }   
+    </div>
+</div>

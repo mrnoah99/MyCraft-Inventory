@@ -1,12 +1,13 @@
-.green {
-    background-color: green;
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-}
-
 .item-card {
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 150px;
+}
+
+.col-3 {
+    width: 20%;
+}
+
+.row {
+    margin-bottom: 15px;
 }
