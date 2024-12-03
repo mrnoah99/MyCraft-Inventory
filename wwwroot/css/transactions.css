@@ -4,3 +4,8 @@
     border: solid black 1px;
     margin-bottom: 15px;
 }
+
+p {
+    line-height: 14pt;
+    margin-bottom: 6px;
+}

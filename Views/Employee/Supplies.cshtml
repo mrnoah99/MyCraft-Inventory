@@ -47,6 +47,7 @@
                             @Html.TextBox("Quantity", null, new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=100 })
                             @Html.ValidationMessageFor(m => m.SuppliedProduct.Quantity, "", new { @class="text-danger" })
                             @Html.Hidden("Name", item.Name)
+                            @Html.Hidden("Price", item.Price)
                             <button type="submit">Add Stock</button>
                         }
                         @if (item.IsInStock) {

@@ -50,7 +50,7 @@ namespace MyCraft_Inventory.Controllers
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
                 List<ProductViewModel> items = await _context.Products.ToListAsync();
-                SupplyCompositeModel model = new SupplyCompositeModel { AllProducts=items, SuppliedProduct=new ProductViewModel { Name="", Description="", ID=default} };
+                SupplyCompositeModel model = new() { AllProducts=items, SuppliedProduct=new ProductViewModel { Name="", Description="", ID=default} };
                 return View(model);
             } else {
                 TempData["Message"] = "You must be an Employee to access this page.";
@@ -59,12 +59,14 @@ namespace MyCraft_Inventory.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> IncreaseStock(int Quantity, string Name) {
+        public async Task<IActionResult> IncreaseStock(int Quantity, string Name, int Price) {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login", "Account");
             var product = await _context.Products.FirstOrDefaultAsync(i => i.Name == Name);
             if (product != null) {
-                Console.WriteLine("QUANTITY: " + Quantity);
                 product.Quantity += Quantity;
                 _context.Products.Update(product);
+                var newTransaction = new TransactionObjectModel { Amount=Quantity*Price, Date=DateTime.Now, ID=default, IsSale=false, UserId=user.Id, ProductName=Name };
                 await _context.SaveChangesAsync();
                 TempData["Message"] = "Stock successfully ordered.";
                 return RedirectToAction("Inventory", "Employee");
@@ -83,8 +85,16 @@ namespace MyCraft_Inventory.Controllers
             }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                ViewBag.transactions = await _context.TransactionHistory.ToListAsync();
-                return View();
+                List<TransactionObjectModel> transactions = await _context.TransactionHistory.ToListAsync();
+                List<ApplicationUser> users = [];
+                transactions.ForEach(async (t) => {
+                    var user = await _userManager.FindByIdAsync(t.UserId);
+                    if (user != null) {
+                        users.Add(user);
+                    }
+                });
+                ViewBag.users = users;
+                return View(transactions);
             } else {
                 TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
@@ -93,9 +103,13 @@ namespace MyCraft_Inventory.Controllers
 
         [HttpPost]
         public async Task<IActionResult> NewItem(ProductViewModel model) {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login", "Account");
             if (ModelState.IsValid) {
                 var newProduct = new ProductViewModel { Name=model.Name, Description=model.Description, Price=model.Price, Quantity=model.Quantity, ID=default };
                 _context.Products.Add(newProduct);
+                var newTransaction = new TransactionObjectModel { Amount=model.Quantity*model.Price, Date=DateTime.Now, ID=default, IsSale=false, ProductName=model.Name, UserId=user.Id };
+                _context.TransactionHistory.Add(newTransaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("OrderItems", "Inventory");
             } else {

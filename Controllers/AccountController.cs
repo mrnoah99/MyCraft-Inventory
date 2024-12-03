@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using MyCraft_Inventory.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using MyCraft_Inventory.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyCraft_Inventory.Controllers
 {
@@ -12,11 +14,13 @@ namespace MyCraft_Inventory.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        private readonly ApplicationDbContext _context;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public async Task initializeRoles() {
@@ -120,7 +124,7 @@ namespace MyCraft_Inventory.Controllers
 
             if (isAdmin) {
                 // Example transactions; replace with actual data fetching logic
-                List<TransactionObjectModel> transactions = [];
+                List<TransactionObjectModel> transactions = await _context.TransactionHistory.Where(t => t.UserId == user.Id).ToListAsync();
 
                 var model = new ProfileViewModel
                 {
@@ -133,7 +137,7 @@ namespace MyCraft_Inventory.Controllers
                 return View(model);
             } else {
                 // Example transactions; replace with actual data fetching logic
-                List<TransactionObjectModel> transactions = [];
+                List<TransactionObjectModel> transactions = await _context.TransactionHistory.Where(t => t.UserId == user.Id).ToListAsync();
 
                 var model = new ProfileViewModel
                 {

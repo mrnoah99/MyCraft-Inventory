@@ -1,5 +1,6 @@
+@using MyCraft_Inventory.Data
 @{
-    var transactions = ViewBag.transactions;
+    var users = ViewBag.users;
 }
 
 <head>
@@ -13,22 +14,25 @@
         <h1>Transaction History</h1>
     </div>
     <div class="container">
-        @{
-            for (int i = 0; i < transactions.GetLength(0); i++) {
-                <div class="row">
-                    <div class="col-12 transaction-card text-center">
-                        <p>ID: @transactions[i].ID</p>
-                        @if (transactions[i].IsSale) {
-                            <p>Type: Sale</p>
-                        } else {
-                            <p>Type: Resupply</p>
+        @foreach (var transaction in Model) {
+            <div class="row">
+                <div class="col-12 transaction-card text-center">
+                    <p>Transaction #@transaction.ID</p>
+                    <p>@transaction.ProductName</p>
+                    @if (transaction.IsSale) {
+                        <p>Type: Sale</p>
+                    } else {
+                        <p>Type: Resupply</p>
+                    }
+                    <p>Amount: $@transaction.Amount</p>
+                    <p>Date: @transaction.Date</p>
+                    @foreach (var user in users) {
+                        if (user.Id == transaction.UserId) {
+                            <p>User: user.UserName</p>
                         }
-                        <p>Amount: $@transactions[i].Amount</p>
-                        <p>Date: @transactions[i].Date</p>
-                    </div>
+                    }
                 </div>
-            }
+            </div>
         }
-        
     </div>
 </div>

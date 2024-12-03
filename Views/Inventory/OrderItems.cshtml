@@ -18,8 +18,6 @@
 
     <div class="main-content">
         <h1 class="page-title">Order an Item</h1>
-
-    using Humanizer;
         <div class="stock-section">
             <h2>In Stock</h2>
             <div class="items-container">
@@ -29,14 +27,14 @@
                         <strong>@item.Name</strong><br>
                         <span>Available Qty: @item.Quantity</span><br>
                         <span class="item-desc"><em>@item.Description</em></span>
-                        @using (Html.BeginForm("OrderItem", "Inventory", FormMethod.Post)) {
+                        @using (Html.BeginForm("OrderItems", "Inventory", FormMethod.Post)) {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.TextBoxFor(m => m.CartModel.Quantity, new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=item.Quantity})
+                            @Html.TextBox("Quantity", null, new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=item.Quantity})
                             @Html.ValidationMessageFor(m => m.CartModel.Quantity, "", new { @class="text-danger" })
-                            @Html.HiddenFor(m => item.Name)
-                            @Html.HiddenFor(m => item.Description)
-                            @Html.HiddenFor(m => item.Price)
+                            @Html.Hidden("Name", item.Name)
+                            @Html.Hidden("Description", item.Description)
+                            @Html.Hidden("Price", item.Price)
                             <button type="submit">Add to Order</button>
                         }
                     </div>

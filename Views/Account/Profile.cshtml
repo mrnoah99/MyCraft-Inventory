@@ -41,8 +41,9 @@
             @foreach (var transaction in Model.Transactions)
             {
                 <div class="transaction-card">
-                    <div class="transaction-id">@transaction.ID</div>
-                    <div class="transaction-amount">$ @transaction.Amount</div>
+                    <div class="transaction-id">Transaction #@transaction.ID</div>
+                    <div class="transaction-product">@transaction.ProductName</div>
+                    <div class="transaction-amount">$@transaction.Amount</div>
                     <div class="transaction-date">@transaction.Date</div>
                     @if (transaction.IsSale) {
                         <div class="transaction-type">Sale</div>

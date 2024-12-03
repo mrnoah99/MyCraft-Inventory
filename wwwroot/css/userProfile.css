@@ -156,7 +156,12 @@ footer {
 }
 
 .transaction-id {
-    font-weight: bold;
+    font-weight: 400;
+    color: #fff;
+}
+
+.transaction-product {
+    font-weight: 600;
     color: #fff;
 }
 

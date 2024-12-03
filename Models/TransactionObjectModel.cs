@@ -16,5 +16,7 @@ namespace MyCraft_Inventory.Models
         public required bool IsSale { get; set; }
 
         public required string UserId { get; set; }
+
+        public required string ProductName { get; set; }
     }
 }
