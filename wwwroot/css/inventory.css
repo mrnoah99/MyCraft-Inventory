@@ -1,7 +1,10 @@
 .item-card {
     margin-left: 10px;
     margin-right: 10px;
-    height: 150px;
+    /* height: 150px; */
+    background-image: url('/images/chest.jpeg') !important;
+    background-size: cover;
+    padding: 10px;
 }
 
 .col-3 {
@@ -10,4 +13,9 @@
 
 .row {
     margin-bottom: 15px;
+}
+
+.data-container{
+    background-color: rgb(255, 255, 255, 0.3);
+    color: black;
 }

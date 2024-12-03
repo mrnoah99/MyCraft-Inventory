@@ -21,9 +21,9 @@
         <div class="stock-section">
             <h2>In Stock</h2>
             <div class="items-container">
-                @foreach (var item in Model.MainPageModel.Where(p => p.IsInStock))
-                {
+                @foreach (var item in Model.MainPageModel.Where(p => p.IsInStock)) {
                     <div class="item-card">
+                        <div class="card-container">
                         <strong>@item.Name</strong><br>
                         <span>Available Qty: @item.Quantity</span><br>
                         <span class="item-desc"><em>@item.Description</em></span>
@@ -38,8 +38,8 @@
                             <button type="submit">Add to Order</button>
                         }
                     </div>
-                }
-            </div>
+                </div> 
+            }
         </div>
 
         <div class="stock-section">

@@ -83,4 +83,8 @@ app.MapControllerRoute(
     name: "New Item",
     pattern: "{controller=Employee}/{action=NewItem}/{id?}");
 
+app.MapControllerRoute(
+    name: "Cart",
+    pattern: "{controller=Inventory}/{action=Cart}/{id?}");
+
 app.Run();

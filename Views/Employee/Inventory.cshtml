@@ -15,14 +15,18 @@
         <h1>Inventory Details</h1>
     </div>
     <div class="container">
-        @for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
+        @for (int i = 0; i < (double)Math.Ceiling(listLength / 4.0); i++)
+        {
             <div class="row">
-                @foreach (var item in Model) {
+                @foreach (var item in Model)
+                {
                     <div class="col-3 item-card">
-                        <p>Name: @item.Name</p>
-                        <p>Description: @item.Description</p>
-                        <p>Price: @item.Price</p>
-                        <p>Qty: @item.Quantity</p>
+                        <div class="data-container">
+                            <p>Name: @item.Name</p>
+                            <p>Description: @item.Description</p>
+                            <p>Price: @item.Price</p>
+                            <p>Qty: @item.Quantity</p>
+                        </div>
                     </div>
                 }
             </div>
@@ -33,6 +37,8 @@
 {
     <script>
         alert('@TempData["Message"]');
-        @{TempData["Message"] = null;}
+        @{
+            TempData["Message"] = null;
+        }
     </script>
 }
