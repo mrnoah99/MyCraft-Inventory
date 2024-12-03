@@ -56,7 +56,7 @@ footer a:hover {
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: auto; /* Centers the form vertically within the available space */
-    margin-top: 10rem; /* Add space to avoid overlap with header */
+    margin-top: 13rem; /* Add space to avoid overlap with header */
     margin-bottom: 4rem; /* Add space to avoid overlap with footer */
 }
 
@@ -81,7 +81,7 @@ input[type="text"],
 input[type="password"] {
     padding: 0.8rem;
     margin: 0.5rem 0;
-    border: 1px solid #ccc;
+    border: 2px solid #333; /* Increase border width and use a darker color */
     border-radius: 8px;
     font-size: 1rem;
     outline: none;
@@ -90,7 +90,13 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #333;
+    border-color: #000; /* Make border darker on focus */
+    border-width: 3px; /* Optional: Make the border slightly wider on focus */
+}
+
+
+.form-input{
+    border-style: solid;
 }
 
 button {
@@ -127,8 +133,8 @@ button:hover {
 
 .navbar {
     background: rgba(255, 255, 255, 0.1); /* White with 10% opacity */
-    background-image: url('/images/water.gif'); /* Replace with your image path */
-    background-size: cover; /* Ensures the image covers the navbar */
+    background-image: url('/images/water1.gif'); /* Replace with your image path */
+    background-size: cover !important; /* Ensures the image covers the navbar */
     background-repeat: no-repeat; /* Prevents tiling of the image */
     background-position: center; /* Centers the image */
     color: white; /* Adjust text color for contrast */
@@ -137,15 +143,15 @@ button:hover {
 }
 
 header{
-    max-height: 110px;
+    max-height: 110px !important;
 }
 
 /* Add button-like styling for the navbar links */
-.navbar a {
+.navbar a, button.logout {
     display: inline-block; /* Ensures links are displayed as blocks similar to buttons */
     background-color: #898ed4; /* Dark background color for visibility */
     color: #ffffff; /* White text color for good contrast */
-    padding: 0.6rem 1.2rem; /* Padding to create a button-like appearance */
+    padding: 0.45rem 0.45rem !important; /* Padding to create a button-like appearance */
     border-radius: 6px; /* Rounded corners */
     margin: 0 0.5rem; /* Spacing between the links */
     text-decoration: none; /* Remove underline for a cleaner look */
@@ -154,12 +160,12 @@ header{
     justify-content: space-around; /* Space out the links evenly */
 }
 
-.navbar a:hover {
+.navbar a:hover, .logout:hover {
     background-color: #ffffff; /* Slightly lighter color on hover for visual feedback */
     transform: scale(1.05); /* Subtle zoom effect on hover for better engagement */
 }
 
-.navbar a.active {
+.navbar a.active, button.logout.active {
     text-decoration: underline; /* Underline for active state */
     background-color: #ffffff; /* Different color to show it's the active page */
 }
@@ -212,4 +218,9 @@ header{
     max-width: 800px;
     border-radius: 8px;
     margin: auto;
+    padding: 12px;
+}
+
+.toggle-box{
+    color: black !important;
 }

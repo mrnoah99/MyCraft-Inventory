@@ -107,7 +107,7 @@ namespace MyCraft_Inventory.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> UserProfile()
+        public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
