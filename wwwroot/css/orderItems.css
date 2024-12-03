@@ -84,8 +84,9 @@ footer {
 }
 
 .item-card {
-    background-color: #7b4a3b;
-    color: white;
+    background-image: url('/images/chest.jpeg') !important;
+    background-size: contain;
+    color: rgb(0, 0, 0);
     padding: 0.45rem;
     border-radius: 4px;
     font-weight: bold;
@@ -96,6 +97,11 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.card-container{
+    background-color: rgb(255, 255, 255, 0.3);
+    color: black;
 }
 
 .item-card:hover {
@@ -154,4 +160,9 @@ button{
 
 .form-control{
     height: 30%;
+}
+
+span, em{
+    color: #000000 !important;
+    font-weight: bold;
 }

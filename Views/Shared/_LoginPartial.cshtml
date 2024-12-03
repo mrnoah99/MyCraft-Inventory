@@ -40,6 +40,22 @@
         </li>
     }
 
+    @* Inventory button for employees only *@
+    @if (roles.Contains("Employee") && !(ViewContext.RouteData.Values["controller"]!.ToString() == "Employee" && ViewContext.RouteData.Values["action"]!.ToString() == "Inventory"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Employee" asp-action="Inventory">Inventory</a>
+        </li>
+    }
+
+    @* Supplies button for employees only *@
+    @if (roles.Contains("Employee") && !(ViewContext.RouteData.Values["controller"]!.ToString() == "Employee" && ViewContext.RouteData.Values["action"]!.ToString() == "Supplies"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Employee" asp-action="Supplies">Supplies</a>
+        </li>
+    }
+
     <li class="nav-item">
         <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link text-dark logout">Logout</button>
