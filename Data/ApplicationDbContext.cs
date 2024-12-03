@@ -26,5 +26,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         {
             entity.Property(e => e.EmployeeCode).HasDefaultValue("");
         });
+
+        builder.Entity<ProductViewModel>()
+        .Property(e => e.ID)
+        .ValueGeneratedOnAdd(); // Explicitly specifies auto-increment
     }
+
+    public DbSet<ProductViewModel> Products { get; set; } = default!;
 }

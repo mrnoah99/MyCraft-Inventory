@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using MyCraft_Inventory.Models;
 using Microsoft.AspNetCore.Identity;
+using SQLitePCL;
+using MyCraft_Inventory.Data;
 
 namespace MyCraft_Inventory.Controllers
 {
@@ -10,11 +12,13 @@ namespace MyCraft_Inventory.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<EmployeeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public EmployeeController(ILogger<EmployeeController> logger, UserManager<ApplicationUser> userManager)
+        public EmployeeController(ILogger<EmployeeController> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _logger = logger;
             _userManager = userManager;
+            _context = context;
         }
 
         [Authorize]
@@ -24,10 +28,6 @@ namespace MyCraft_Inventory.Controllers
             if (user == null) return RedirectToAction("Login", "Account");
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                InventoryObjectModel inventory = new InventoryObjectModel {ItemName = "bob", ItemDescription = "bob", ItemPrice = 50.99, Qty = 5, InStock = false};
-                InventoryObjectModel inventory2 = new InventoryObjectModel {ItemName = "john", ItemDescription = "john", ItemPrice = 69.99, Qty = 72, InStock = false};
-                InventoryObjectModel[] test = {inventory, inventory2};
-                ViewBag.items = test;
                 return View();
             } else {
                 return RedirectToAction("Index", "Home");
@@ -39,19 +39,14 @@ namespace MyCraft_Inventory.Controllers
             if (user == null) return RedirectToAction("Login", "Account");
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                InventoryObjectModel supply1 = new InventoryObjectModel {ItemName = "bob", ItemDescription = "bob", ItemPrice = 50.99, Qty = 5, InStock = true};
-                InventoryObjectModel supply2 = new InventoryObjectModel {ItemName = "john", ItemDescription = "john", ItemPrice = 69.99, Qty = 72, InStock = true};
-                InventoryObjectModel supply3 = new InventoryObjectModel {ItemName = "jeb", ItemDescription = "jeb", ItemPrice = 120.99, Qty = 1, InStock = true};
-                InventoryObjectModel supply4 = new InventoryObjectModel {ItemName = "oops", ItemDescription = "out of stock item", ItemPrice = 1.01, Qty = 0, InStock = false};
-                InventoryObjectModel[] test = {supply1, supply2, supply3, supply4};
-                ViewBag.availableItems = test;
                 return View();
             } else {
                 return RedirectToAction("Index", "Home");
             }
         }
 
-        public async Task<IActionResult> TransactionHistory() {var user = await _userManager.GetUserAsync(User);
+        public async Task<IActionResult> TransactionHistory() {
+            var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction("Login", "Account");
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
@@ -60,6 +55,24 @@ namespace MyCraft_Inventory.Controllers
                 TransactionObjectModel transaction3 = new TransactionObjectModel {Date = new DateTime(12345678910), Amount = 78.99, ID = 3, IsSale = true};
                 TransactionObjectModel[] test = {transaction1, transaction2, transaction3};
                 ViewBag.transactions = test;
+                return View();
+            } else {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewItem(ProductViewModel model) {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login", "Account");
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
+            if (isAdmin) {
+                if (ModelState.IsValid) {
+                    var newProduct = new ProductViewModel { Name=model.Name, Description=model.Description, Price=model.Price, Quantity=model.Quantity, ID=default };
+                    _context.Products.Add(newProduct);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("OrderItems", "Inventory");
+                }
                 return View();
             } else {
                 return RedirectToAction("Index", "Home");
