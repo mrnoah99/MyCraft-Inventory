@@ -32,14 +32,15 @@ namespace MyCraft_Inventory.Controllers
             }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                ViewBag.products = await _context.Products.ToListAsync();
-                return View();
+                List<ProductViewModel> items = await _context.Products.ToListAsync();
+                return View(items);
             } else {
                 TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Supplies() {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) {
@@ -48,14 +49,32 @@ namespace MyCraft_Inventory.Controllers
             }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                ViewBag.products = await _context.Products.ToListAsync();
-                return View();
+                List<ProductViewModel> items = await _context.Products.ToListAsync();
+                SupplyCompositeModel model = new SupplyCompositeModel { AllProducts=items, SuppliedProduct=new ProductViewModel { Name="", Description="", ID=default} };
+                return View(model);
             } else {
                 TempData["Message"] = "You must be an Employee to access this page.";
                 return RedirectToAction("Index", "Home");
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> IncreaseStock(int Quantity, string Name) {
+            var product = await _context.Products.FirstOrDefaultAsync(i => i.Name == Name);
+            if (product != null) {
+                Console.WriteLine("QUANTITY: " + Quantity);
+                product.Quantity += Quantity;
+                _context.Products.Update(product);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Stock successfully ordered.";
+                return RedirectToAction("Inventory", "Employee");
+            } else {
+                TempData["Message"] = "An error occurred, please try again later.";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [Authorize]
         public async Task<IActionResult> TransactionHistory() {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) {
