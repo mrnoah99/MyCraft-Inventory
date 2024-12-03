@@ -77,6 +77,6 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "Profile",
-    pattern: "{controller=Account}/{action=UserProfile}/{id?}");
+    pattern: "{controller=Account}/{action=Profile}/{id?}");
 
 app.Run();

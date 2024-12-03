@@ -16,15 +16,13 @@ body {
 
 /* Header Styling */
 /* Header Styling */
-header {
+header, footer {
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
 }
 
 header nav {
@@ -89,11 +87,11 @@ footer {
 
 /* Page Title */
 .page-title {
-    font-size: 1.8rem;
-    font-weight: bold;
     text-align: center;
     margin-bottom: 2rem;
-    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000000;
 }
 
 /* Profile and Transaction Sections Centered */
@@ -103,7 +101,6 @@ footer {
     background-color: #e0e0e0;
     padding: 1.5rem;
     border-radius: 8px;
-    margin-bottom: 2rem;
 }
 
 
@@ -119,6 +116,7 @@ footer {
     border-radius: 4px;
     font-weight: bold;
     text-align: left;
+    color: black;
 }
 
 .field-value {
@@ -126,6 +124,7 @@ footer {
     padding: 0.5rem;
     border-radius: 4px;
     text-align: left;
+    color: black;
 }
 
 /* Transaction Section */
@@ -166,4 +165,13 @@ footer {
 .transaction-type {
     color: #ddd;
     font-size: 0.9rem;
+}
+
+.profile-section{
+    margin-top: 15rem;
+}
+
+.transaction-section{
+    margin-bottom: 4rem;
+    margin-top: 2rem;
 }

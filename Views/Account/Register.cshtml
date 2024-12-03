@@ -45,7 +45,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-input", placeholder = "Confirm Password" })
                 @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 
-                <div>
+                <div class="toggle-box">
                     @Html.CheckBoxFor(m => m.IsEmployee) Register as Employee?
                 </div>
 
