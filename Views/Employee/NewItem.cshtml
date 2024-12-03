@@ -1,0 +1,31 @@
+@model MyCraft_Inventory.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Add New Item";
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+}
+
+<div class="login-container">
+    <h1>MyCraft Inventory</h1>
+    <h2>Add New Item</h2>
+    @using (Html.BeginForm("NewItem", "Employee", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-input", placeholder = "Item Name" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-input", placeholder = "Item Description" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+
+        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-input", placeholder = "Quantity", Type="number" })
+        @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger" })
+
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-input", placeholder = "Price" })
+        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+
+        <button type="submit" class="login-button">Add Item</button>
+    }
+</div>

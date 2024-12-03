@@ -5,13 +5,25 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    @* Check if the current page is not the UserProfile page *@
-    @if (!(ViewContext.RouteData.Values["controller"]!.ToString() == "Account" && ViewContext.RouteData.Values["action"]!.ToString() == "UserProfile"))
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user!);
+
+    @* Check if the current page is not the Profile page *@
+    @if (!(ViewContext.RouteData.Values["controller"]!.ToString() == "Account" && ViewContext.RouteData.Values["action"]!.ToString() == "Profile"))
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Profile" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
     }
+
+    @* Add New Item button for employees only *@
+    @if (roles.Contains("Employee") && !(ViewContext.RouteData.Values["controller"]!.ToString() == "Employee" && ViewContext.RouteData.Values["action"]!.ToString() == "NewItem"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Employee" asp-action="NewItem">Add New Item</a>
+        </li>
+    }
+
     <li class="nav-item">
         <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link text-dark logout">Logout</button>

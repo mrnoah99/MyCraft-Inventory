@@ -93,6 +93,7 @@ namespace MyCraft_Inventory.Controllers
                 return RedirectToAction("Login", "Account");
             }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
+
             if (isAdmin) {
                 return View();
             } else {

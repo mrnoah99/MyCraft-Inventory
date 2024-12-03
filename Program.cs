@@ -79,4 +79,8 @@ app.MapControllerRoute(
     name: "Profile",
     pattern: "{controller=Account}/{action=Profile}/{id?}");
 
+app.MapControllerRoute(
+    name: "New Item",
+    pattern: "{controller=Employee}/{action=NewItem}/{id?}");
+
 app.Run();
