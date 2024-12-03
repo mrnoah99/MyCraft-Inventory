@@ -29,7 +29,7 @@ namespace MyCraft_Inventory.Controllers
         }
 
         [HttpGet]
-        public ActionResult Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -67,6 +67,10 @@ namespace MyCraft_Inventory.Controllers
                         ModelState.AddModelError("", error.Description);
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("ConfirmPassword", "The password and confirmation password do not match.");
+                }
             }
 
             return View(model);
@@ -93,7 +97,7 @@ namespace MyCraft_Inventory.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
 
-            return View(model);
+            return View(model); 
         }
 
         public async Task<IActionResult> Logout()

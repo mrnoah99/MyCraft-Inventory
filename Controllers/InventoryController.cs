@@ -15,7 +15,7 @@ namespace MyCraft_Inventory.Controllers
             {
                 new ProductViewModel { Name = "Item 1", Quantity = 10, Description = "Anti dandruff shampoo" },
                 new ProductViewModel { Name = "Item 2", Quantity = 0, Description = "A pair of titanium scissors" },
-                new ProductViewModel { Name = "Item 3", Quantity = 5, Description = "A bag of M&m's" }
+                new ProductViewModel { Name = "Item 3", Quantity = 5, Description = "A bag og M&m's" }
             };
 
             return View(products);

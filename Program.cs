@@ -21,6 +21,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.User.RequireUniqueEmail = true;
 });
 
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -54,9 +55,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

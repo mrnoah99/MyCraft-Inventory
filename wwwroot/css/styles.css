@@ -11,8 +11,13 @@ body {
     align-items: center;
     height: 91vh;
     flex-direction: column; /* Ensures header and footer stack vertically */
-    background-color: #b0b0c3; /* Background color */
+    background-image: url('/images/storage.webp'); /* Apply the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the image */
+    background-attachment: fixed; /* Make the background fixed when scrolling */
+    color: #fff; /* Adjust text color if needed for better readability */
 }
+
 
 header, footer {
     width: 100%;
@@ -47,7 +52,7 @@ footer a:hover {
     padding: 2rem;
     border-radius: 12px;
     width: 100%;
-    max-width: 350px;
+    max-width: 550px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: auto; /* Centers the form vertically within the available space */
@@ -102,4 +107,109 @@ button {
 
 button:hover {
     background-color: #555;
+}
+
+/* .navbar a.active {
+    text-decoration: underline !important;
+    text-underline-offset: 4px; 
+    color: #333 !important;
+} */
+
+/* .navbar a:hover {
+    color: #fff;
+    background-color: #aa82aa; 
+    text-decoration: none;
+} */
+
+.nav-link.text-dark{
+    font-size: 20px;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.1); /* White with 10% opacity */
+    background-image: url('/images/water.gif'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the navbar */
+    background-repeat: no-repeat; /* Prevents tiling of the image */
+    background-position: center; /* Centers the image */
+    color: white; /* Adjust text color for contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    padding: 1rem 2rem; /* Space around the content */
+}
+
+header{
+    max-height: 110px;
+}
+
+/* Add button-like styling for the navbar links */
+.navbar a {
+    display: inline-block; /* Ensures links are displayed as blocks similar to buttons */
+    background-color: #898ed4; /* Dark background color for visibility */
+    color: #ffffff; /* White text color for good contrast */
+    padding: 0.6rem 1.2rem; /* Padding to create a button-like appearance */
+    border-radius: 6px; /* Rounded corners */
+    margin: 0 0.5rem; /* Spacing between the links */
+    text-decoration: none; /* Remove underline for a cleaner look */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover transition */
+    display: flex; /* Make navbar a flex container */
+    justify-content: space-around; /* Space out the links evenly */
+}
+
+.navbar a:hover {
+    background-color: #ffffff; /* Slightly lighter color on hover for visual feedback */
+    transform: scale(1.05); /* Subtle zoom effect on hover for better engagement */
+}
+
+.navbar a.active {
+    text-decoration: underline; /* Underline for active state */
+    background-color: #ffffff; /* Different color to show it's the active page */
+}
+
+.privacy-section {
+    background: #ffffff; /* White background */
+    color: #000000; /* Black text */
+    margin: 1.5rem auto; /* Add spacing between sections and center */
+    padding: 10px; /* Padding inside each section */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 800px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.privacy-section.first-card{
+    margin-top: 1050px;
+}
+
+.privacy-section.last-card{
+    margin-bottom: 3rem;
+}
+
+.home-section {
+    background: #ffffff; /* White background */
+    color: #000000; /* Black text */
+    margin: auto; /* Add spacing between sections and center */
+    padding: 10px; /* Padding inside each section */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 800px;
+    margin-top: 10px !important;
+}
+
+.home-section.first-card h2{
+    font-weight: bold;
+}
+
+.text-center.page-title{
+    margin-bottom: none;
+    margin-top: 150px !important;
+    background-color: #ffffff;
+    max-width: 800px;
+    border-radius: 8px;
+    margin: auto;
 }
