@@ -1,4 +1,4 @@
-@* @model IEnumerable<MyCraft_Inventory.Models.ProductViewModel> *@
+@model MyCraft_Inventory.Models.CartHandlerCompositeModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,12 +24,22 @@
             <div class="items-section">
                 <h2>Items in Cart</h2>
                 <div class="items-container">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.CartList)
                     {
                         <div class="item-card">
                             <strong>@item.Name</strong><br>
                             <span>Quantity: @item.Quantity</span><br>
                             <span class="item-desc"><em>@item.Description</em></span>
+                            <span>Price: $ @item.Price / Item</span>
+                            @Html.BeginForm("RemoveFromCart", "Inventory", FormMethod.Post) {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.CartRemove.Quantity , new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=item.Quantity })
+                                @Html.ValidationMessageFor(m => m.CartRemove.Quantity, "", new { @class="text-danger" })
+                                @Html.HiddenFor(m => item.Name)
+                                @Html.HiddenFor(m => item.UserId)
+                                <button type="submit" style="background-color: red;">Remove From Cart?</button>
+                            }
                         </div>
                     }
                 </div>
@@ -37,34 +47,36 @@
 
             <div class="payment-section">
                 <h2>Payment Information</h2>
-                @using (Html.BeginForm("ProcessPayment", "Cart", FormMethod.Post))
+                @using (Html.BeginForm("ProcessPayment", "Inventory", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="form-group">
-                        @Html.Label("First Name")
-                        @Html.TextBox("FirstName", null, new { @class = "form-control", placeholder = "First Name" })
+                        @Html.LabelFor(m => m.Payment.FirstName)
+                        @Html.TextBoxFor(m => m.Payment.FirstName, null, new { @class = "form-control", placeholder = "First Name" })
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Last Name")
-                        @Html.TextBox("LastName", null, new { @class = "form-control", placeholder = "Last Name" })
+                        @Html.LabelFor(m => m.Payment.LastName)
+                        @Html.TextBoxFor(m => m.Payment.LastName, null, new { @class = "form-control", placeholder = "Last Name" })
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Card Number")
-                        @Html.TextBox("CardNumber", null, new { @class = "form-control", placeholder = "Card Number" })
+                        @Html.LabelFor(m => m.Payment.CardNumber)
+                        @Html.TextBoxFor(m => m.Payment.CardNumber, null, new { @class = "form-control", placeholder = "Card Number" })
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("CVV")
-                        @Html.TextBox("CVV", null, new { @class = "form-control", placeholder = "CVV" })
+                        @Html.LabelFor(m => m.Payment.CVV)
+                        @Html.TextBoxFor(m => m.Payment.CVV, null, new { @class = "form-control", placeholder = "CVV" })
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Expiration Date")
-                        @Html.TextBox("ExpirationDate", null, new { @class = "form-control", placeholder = "MM/YY" })
+                        @Html.LabelFor(m => m.Payment.ExpirationDate)
+                        @Html.TextBoxFor(m => m.Payment.ExpirationDate, null, new { @class = "form-control", placeholder = "MM/YY" })
                     </div>
+
+                    @Html.HiddenFor(m => m.CartList)
 
                     <button type="submit" class="btn btn-primary">Pay Now</button>
                 }
@@ -73,3 +85,10 @@
     </div>
 </body>
 </html>
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+        @{TempData["Message"] = null;}
+    </script>
+}

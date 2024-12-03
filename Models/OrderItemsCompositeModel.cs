@@ -7,7 +7,7 @@ namespace MyCraft_Inventory.Models
 {
     public class OrderItemsCompositeModel
     {
-        public List<ProductViewModel> MainPageModel { get; set; }
-        public CartItemViewModel CartModel { get; set; }
+        public required List<ProductViewModel> MainPageModel { get; set; }
+        public required CartItemViewModel CartModel { get; set; }
     }
 }

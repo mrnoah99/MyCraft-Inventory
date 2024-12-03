@@ -120,11 +120,7 @@ namespace MyCraft_Inventory.Controllers
 
             if (isAdmin) {
                 // Example transactions; replace with actual data fetching logic
-                var transactions = new List<TransactionObjectModel>
-                {
-                    new TransactionObjectModel { ID = 43563, Amount = 260.00, Date = new DateTime(new DateOnly(2024, 1, 1), new TimeOnly(12, 30)), IsSale = false },
-                    new TransactionObjectModel { ID = 65816, Amount = 460.50, Date = new DateTime(new DateOnly(2024, 1, 10), new TimeOnly(11, 25)), IsSale = true }
-                };
+                List<TransactionObjectModel> transactions = [];
 
                 var model = new ProfileViewModel
                 {
@@ -137,11 +133,7 @@ namespace MyCraft_Inventory.Controllers
                 return View(model);
             } else {
                 // Example transactions; replace with actual data fetching logic
-                var transactions = new List<TransactionObjectModel>
-                {
-                    new TransactionObjectModel { ID = 12345, Amount = 100.00, Date = new DateTime(new DateOnly(2024, 1, 1), new TimeOnly(14, 50)), IsSale = true },
-                    new TransactionObjectModel { ID = 67890, Amount = 50.50, Date = new DateTime(new DateOnly(2024, 1, 10), new TimeOnly(12, 30)), IsSale = true }
-                };
+                List<TransactionObjectModel> transactions = [];
 
                 var model = new ProfileViewModel
                 {
