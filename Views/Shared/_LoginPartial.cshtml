@@ -24,6 +24,22 @@
         </li>
     }
 
+    @* Order Items button *@
+    @if (!(ViewContext.RouteData.Values["controller"]!.ToString() == "Inventory" && ViewContext.RouteData.Values["action"]!.ToString() == "OrderItems"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Inventory" asp-action="OrderItems">Order Items</a>
+        </li>
+    }
+
+    @* Transaction History button *@
+    @if (roles.Contains("Employee") && !(ViewContext.RouteData.Values["controller"]!.ToString() == "Employee" && ViewContext.RouteData.Values["action"]!.ToString() == "TransactionHistory"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Employee" asp-action="TransactionHistory">Transaction History</a>
+        </li>
+    }
+
     <li class="nav-item">
         <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link text-dark logout">Logout</button>

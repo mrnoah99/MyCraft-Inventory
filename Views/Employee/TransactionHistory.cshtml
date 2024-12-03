@@ -10,25 +10,48 @@
 
 <div>
     <div class="text-center">
-        <h1>Transaction History</h1>
+        <h2>Transaction History</h2>
     </div>
     <div class="container">
         @{
-            for (int i = 0; i < transactions.GetLength(0); i++) {
+            for (int i = 0; i < transactions.GetLength(0); i++)
+            {
+                var cssClass = "";
+                if (transactions[i].ID == 1)
+                {
+                    cssClass = "bg-image-1";
+                }
+                else if (transactions[i].ID >= 2 && transactions[i].ID <= 10)
+                {
+                    cssClass = "bg-image-2";
+                }
+                else if (transactions[i].ID >= 11 && transactions[i].ID <= 20)
+                {
+                    cssClass = "bg-image-3";
+                }
+                else
+                {
+                    cssClass = "bg-image-4";
+                }
                 <div class="row">
-                    <div class="col-12 transaction-card text-center">
-                        <p>ID: @transactions[i].ID</p>
-                        @if (transactions[i].IsSale) {
-                            <p>Type: Sale</p>
-                        } else {
-                            <p>Type: Resupply</p>
-                        }
-                        <p>Amount: $@transactions[i].Amount</p>
-                        <p>Date: @transactions[i].Date</p>
+                    <div class="col-12 transaction-card text-center @cssClass">
+                        @* <h3>Transaction</h3> *@
+                        <div class=" transaction-card-container">
+                            <p>ID: @transactions[i].ID</p>
+                            @if (transactions[i].IsSale)
+                            {
+                                <p>Type: Sale</p>
+                            }
+                            else
+                            {
+                                <p>Type: Resupply</p>
+                            }
+                            <p>Amount: $@transactions[i].Amount</p>
+                            <p>Date: @transactions[i].Date</p>
+                        </div>
                     </div>
                 </div>
             }
         }
-        
     </div>
 </div>
