@@ -22,6 +22,8 @@
             <h2>Register</h2>
             @using (Html.BeginForm("Register", "Account", FormMethod.Post))
             {
+                @Html.AntiForgeryToken()
+
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-input", placeholder = "Email" })
@@ -36,6 +38,16 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-input", placeholder = "Confirm Password" })
                 @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 
+                <div>
+                    @Html.CheckBoxFor(m => m.IsEmployee) Register as Employee?
+                </div>
+
+                <div id="employeeCodeContainer" style="display: none;">
+                    @Html.TextBoxFor(m => m.EmployeeCode, new { @class = "form-input", placeholder = "Employee Code" })
+                    @Html.ValidationMessageFor(m => m.EmployeeCode, "", new { @class = "text-danger" })
+                </div>
+
+
                 <button type="submit" class="login-button">Register</button>
             }
         </div>
@@ -44,5 +56,13 @@
     @* <footer>
         <p>&copy; 2024 - MyCraft_Inventory - <a href="/Home/Privacy">Privacy</a></p>
     </footer> *@
+
+    @section Scripts {
+        <script>
+            document.querySelector("[name='IsEmployee']").addEventListener('change', function() {
+                document.getElementById('employeeCodeContainer').style.display = this.checked ? 'block' : 'none';
+            });
+        </script>
+    }
 </body>
 </html>

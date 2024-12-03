@@ -1,4 +1,4 @@
-@model MyCraft_Inventory.Models.UserProfileViewModel
+@model MyCraft_Inventory.Models.ProfileViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,9 +42,15 @@
             @foreach (var transaction in Model.Transactions)
             {
                 <div class="transaction-card">
-                    <div class="transaction-id">@transaction.TransactionId</div>
+                    <div class="transaction-id">@transaction.ID</div>
                     <div class="transaction-amount">$ @transaction.Amount</div>
                     <div class="transaction-date">@transaction.Date</div>
+                    @if (transaction.IsSale) {
+                        <div class="transaction-type">Sale</div>
+                    } else {
+                        <div class="transaction-type">Supply Order</div>
+                    }
+                    
                 </div>
             }
         </div>

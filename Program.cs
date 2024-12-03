@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyCraft_Inventory.Data;
+using MyCraft_Inventory.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -21,8 +22,24 @@ builder.Services.Configure<IdentityOptions>(options => {
 });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+// Seed roles
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        await DataSeeder.SeedRoles(services);
+    }
+    catch (Exception ex)
+    {
+        // Log errors if needed
+        Console.WriteLine($"Error seeding roles: {ex.Message}");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -32,7 +49,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -61,11 +77,7 @@ app.MapControllerRoute(
     pattern: "{controller=Inventory}/{action=OrderItems}/{id?}");
 
 app.MapControllerRoute(
-    name: "UserProfile",
+    name: "Profile",
     pattern: "{controller=Account}/{action=UserProfile}/{id?}");
-
-app.MapControllerRoute(
-    name: "EmployeeProfile",
-    pattern: "{controller=Account}/{action=EmployeeProfile}/{id?}");
 
 app.Run();

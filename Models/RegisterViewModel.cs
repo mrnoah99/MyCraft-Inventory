@@ -18,6 +18,13 @@ namespace MyCraft_Inventory.Models
         public required string Password { get; set; }
 
         [Required]
+        [Display(Name = "Employee")]
+        public required bool IsEmployee { get; set; }
+
+        [Display(Name = "Employee Code")]
+        public  string? EmployeeCode { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Passwords do not match.")]

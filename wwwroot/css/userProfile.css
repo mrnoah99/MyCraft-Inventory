@@ -162,7 +162,8 @@ footer {
 }
 
 .transaction-amount,
-.transaction-date {
+.transaction-date,
+.transaction-type {
     color: #ddd;
     font-size: 0.9rem;
 }

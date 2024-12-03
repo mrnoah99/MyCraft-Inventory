@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyCraft_Inventory.Models;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ namespace MyCraft_Inventory.Controllers
 {
     public class InventoryController : Controller
     {
+        [Authorize]
         public IActionResult OrderItems()
         {
             // Sample data; replace with data from your database or service.

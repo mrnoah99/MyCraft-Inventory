@@ -9,13 +9,23 @@ namespace MyCraft_Inventory.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
+        }
+
+        public async Task initializeRoles() {
+            string[] roles = {"Employee", "Customer"};
+            foreach (var role in roles) {
+                if (!await _roleManager.RoleExistsAsync(role)) {
+                    await _roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
         }
 
         [HttpGet]
@@ -25,17 +35,29 @@ namespace MyCraft_Inventory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Username, Email = model.Email };
+                ApplicationUser user;
+                if (model.IsEmployee && !string.IsNullOrEmpty(model.EmployeeCode)) {
+                    user = new ApplicationUser { UserName = model.Username, Email = model.Email, EmployeeCode = model.EmployeeCode, IsEmployee = model.IsEmployee };
+                } else {
+                    user = new ApplicationUser { UserName = model.Username, Email = model.Email, EmployeeCode = "", IsEmployee = false };
+                }
                 if (model.Password == model.ConfirmPassword)
                 {
                     var result = await _userManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded)
                     {
+                        if (model.IsEmployee
+                        && !string.IsNullOrEmpty(model.EmployeeCode)) {
+                            await _userManager.AddToRoleAsync(user, "Employee");
+                        } else {
+                            await _userManager.AddToRoleAsync(user, "Customer");
+                        }
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }
@@ -89,58 +111,44 @@ namespace MyCraft_Inventory.Controllers
                 return RedirectToAction("Login", "Account"); // Redirect if user is not logged in
             }
 
-            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             var role = isAdmin ? "Admin" : "User";
 
-            // Example transactions; replace with actual data fetching logic
-            var transactions = new List<Transaction>
-            {
-                new Transaction { TransactionId = "TX12345", Amount = 100.00M, Date = "2024-01-01" },
-                new Transaction { TransactionId = "TX67890", Amount = 50.50M, Date = "2024-01-10" }
-            };
+            if (isAdmin) {
+                // Example transactions; replace with actual data fetching logic
+                var transactions = new List<TransactionObjectModel>
+                {
+                    new TransactionObjectModel { ID = 43563, Amount = 260.00, Date = new DateTime(new DateOnly(2024, 1, 1), new TimeOnly(12, 30)), IsSale = false },
+                    new TransactionObjectModel { ID = 65816, Amount = 460.50, Date = new DateTime(new DateOnly(2024, 1, 10), new TimeOnly(11, 25)), IsSale = true }
+                };
 
-            var model = new UserProfileViewModel
-            {
-                Email = user?.Email ?? string.Empty,
-                Username = user?.UserName ?? string.Empty,
-                AccountId = user?.Id ?? string.Empty,
-                Role = role,
-                Transactions = transactions
-            };
+                var model = new ProfileViewModel
+                {
+                    Email = user?.Email ?? string.Empty,
+                    Username = user?.UserName ?? string.Empty,
+                    AccountId = user?.Id ?? string.Empty,
+                    Role = role,
+                    Transactions = transactions
+                };
+                return View(model);
+            } else {
+                // Example transactions; replace with actual data fetching logic
+                var transactions = new List<TransactionObjectModel>
+                {
+                    new TransactionObjectModel { ID = 12345, Amount = 100.00, Date = new DateTime(new DateOnly(2024, 1, 1), new TimeOnly(14, 50)), IsSale = true },
+                    new TransactionObjectModel { ID = 67890, Amount = 50.50, Date = new DateTime(new DateOnly(2024, 1, 10), new TimeOnly(12, 30)), IsSale = true }
+                };
 
-            return View(model);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> EmployeeProfile()
-        {
-            var employee = await _userManager.GetUserAsync(User);
-            if (employee == null)
-            {
-                return RedirectToAction("Login", "Account");
+                var model = new ProfileViewModel
+                {
+                    Email = user?.Email ?? string.Empty,
+                    Username = user?.UserName ?? string.Empty,
+                    AccountId = user?.Id ?? string.Empty,
+                    Role = role,
+                    Transactions = transactions
+                };
+                return View(model);
             }
-
-            var isAdmin = await _userManager.IsInRoleAsync(employee, "Admin");
-            var role = isAdmin ? "Admin" : "Employee";
-
-            // Example transactions; replace with actual data fetching logic
-            var transactions = new List<Transaction>
-            {
-                new Transaction { TransactionId = "RX43563", Amount = 260.00M, Date = "2024-01-01" },
-                new Transaction { TransactionId = "RX65816", Amount = 460.50M, Date = "2024-01-10" }
-            };
-
-            var model = new EmployeeProfileViewModel
-            {
-                Email = employee?.Email ?? string.Empty,
-                Username = employee?.UserName ?? string.Empty,
-                AccountId = employee?.Id ?? string.Empty,
-                Role = role,
-                Transactions = transactions
-            };
-
-            return View(model);
         }
-
     }
 }
