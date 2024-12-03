@@ -16,7 +16,7 @@
     <div class="container">
         @foreach (var transaction in Model) {
             <div class="row">
-                <div class="col-12 transaction-card text-center">
+                <div class="col-12 transaction-card text-center" style="background-color: aliceblue">
                     <p>Transaction #@transaction.ID</p>
                     <p>@transaction.ProductName</p>
                     @if (transaction.IsSale) {
