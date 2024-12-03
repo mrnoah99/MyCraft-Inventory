@@ -1,8 +1,9 @@
 @{
-    var availableItems = ViewBag.availableItems;
+    var items = ViewBag.items;
     bool lowStock = false;
-    for (int i = 0; i < availableItems.GetLength(0); i++) {
-        if (availableItems[i].Qty < 10) lowStock = true;
+    int listLength = items.Capacity;
+    for (int i = 0; i < listLength - 1; i++) {
+        if (items[i].Quantity < 10) lowStock = true;
     }
 }
 
@@ -22,11 +23,11 @@
             <div class="popup container text-center">
                 <h2>The following items are low on stock:</h2>
                 @{
-                    for (int i = 0; i < availableItems.GetLength(0); i++) {
-                        if (availableItems[i].Qty < 10) {
+                    for (int i = 0; i < listLength - 1; i++) {
+                        if (items[i].Quantity < 10) {
                             <div class="row">
                                 <div class="col-12">
-                                    @availableItems[i].ItemName
+                                    @items[i].Name
                                 </div>
                             </div>
                         }
@@ -37,17 +38,17 @@
     }
     <div class="container">
         @{
-            for (int i = 0; i < (double) Math.Ceiling(availableItems.GetLength(0) / 4.0); i++) {
+            for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
                 <div class="row">
                     @{
-                        for (int j = 0; j < Math.Min(4, availableItems.GetLength(0)); j++) {
+                        for (int j = 0; j < Math.Min(4, listLength - 1); j++) {
                             <div class="col-3 item-card gray">
-                                <p>Name: @availableItems[j].ItemName</p>
-                                <p>Description: @availableItems[j].ItemDescription</p>
-                                <p>Current Qty: @availableItems[j].Qty</p>
-                                <p>Sale Price: @availableItems[j].ItemPrice</p>
+                                <p>Name: @items[j].Name</p>
+                                <p>Description: @items[j].Description</p>
+                                <p>Current Qty: @items[j].Quantity</p>
+                                <p>Sale Price: @items[j].Price</p>
                                 @{
-                                    if (availableItems[j].InStock) {
+                                    if (items[j].IsInStock) {
                                         <p>In Stock</p>
                                     } else {
                                         <p>Out of Stock</p>

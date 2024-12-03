@@ -14,15 +14,16 @@
     </div>
     <div class="container">
         @{
-            for (int i = 0; i < (double) Math.Ceiling(items.GetLength(0) / 4.0); i++) {
+            int listLength = items.Capacity;
+            for (int i = 0; i < (double) Math.Ceiling(listLength / 4.0); i++) {
                 <div class="row">
                     @{
-                        for (int j = 0; j < Math.Min(4, items.GetLength(0)); j++) {
+                        for (int j = 0; j < Math.Min(4, listLength - 1); j++) {
                             <div class="col-3 item-card">
-                                <p>Name: @items[j].ItemName</p>
-                                <p>Description: @items[j].ItemDescription</p>
-                                <p>Price: @items[j].ItemPrice</p>
-                                <p>Qty: @items[j].Qty</p>
+                                <p>Name: @items[j].Name</p>
+                                <p>Description: @items[j].Description</p>
+                                <p>Price: @items[j].Price</p>
+                                <p>Qty: @items[j].Quantity</p>
                             </div>
                         }
                     }

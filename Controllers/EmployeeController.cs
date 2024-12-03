@@ -32,7 +32,8 @@ namespace MyCraft_Inventory.Controllers
             }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                ViewBag.products = await _context.Products.ToListAsync();
+                List<ProductViewModel> products = await _context.Products.ToListAsync();
+                ViewBag.items = products;
                 return View();
             } else {
                 TempData["Message"] = "You must be an Employee to access this page.";
@@ -48,7 +49,7 @@ namespace MyCraft_Inventory.Controllers
             }
             var isAdmin = await _userManager.IsInRoleAsync(user, "Employee");
             if (isAdmin) {
-                ViewBag.products = await _context.Products.ToListAsync();
+                ViewBag.items = await _context.Products.ToListAsync();
                 return View();
             } else {
                 TempData["Message"] = "You must be an Employee to access this page.";

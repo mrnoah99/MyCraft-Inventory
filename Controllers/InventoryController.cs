@@ -30,7 +30,7 @@ namespace MyCraft_Inventory.Controllers
                 MainPageModel =  products,
                 CartModel = new CartItemViewModel { Description="", Name="", UserId="", Price=0, Quantity=0 }
             };
-            return View(products);
+            return View(model);
         }
 
         [HttpPost]
