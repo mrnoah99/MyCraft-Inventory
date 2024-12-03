@@ -30,7 +30,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<ProductViewModel>()
         .Property(e => e.ID)
         .ValueGeneratedOnAdd(); // Explicitly specifies auto-increment
+
+        builder.Entity<CartItemViewModel>()
+        .HasKey(c => new { c.UserId, c.Name });
+
+        builder.Entity<TransactionObjectModel>()
+        .Property(e => e.ID)
+        .ValueGeneratedOnAdd();
     }
 
     public DbSet<ProductViewModel> Products { get; set; } = default!;
+
+    public DbSet<CartItemViewModel> CartItems { get; set; } = default!;
+
+    public DbSet<TransactionObjectModel> TransactionHistory { get; set; } = default!;
 }

@@ -30,3 +30,10 @@
         Get started today and take control of your crafting inventory with MyCraft Inventory!
     </p>
 </div>
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+        @{TempData["Message"] = null;}
+    </script>
+}

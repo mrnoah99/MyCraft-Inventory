@@ -1,4 +1,4 @@
-@model IEnumerable<MyCraft_Inventory.Models.ProductViewModel>
+@model MyCraft_Inventory.Models.OrderItemsCompositeModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,15 +19,26 @@
     <div class="main-content">
         <h1 class="page-title">Order an Item</h1>
 
+    using Humanizer;
         <div class="stock-section">
             <h2>In Stock</h2>
             <div class="items-container">
-                @foreach (var item in Model.Where(p => p.IsInStock))
+                @foreach (var item in Model.MainPageModel.Where(p => p.IsInStock))
                 {
                     <div class="item-card">
                         <strong>@item.Name</strong><br>
                         <span>Available Qty: @item.Quantity</span><br>
                         <span class="item-desc"><em>@item.Description</em></span>
+                        @using (Html.BeginForm("OrderItem", "Inventory", FormMethod.Post)) {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(m => m.CartModel.Quantity, new { @type="number", @class="form-control", @placeholder="Enter quantity", @min=0, @max=item.Quantity})
+                            @Html.ValidationMessageFor(m => m.CartModel.Quantity, "", new { @class="text-danger" })
+                            @Html.HiddenFor(m => item.Name)
+                            @Html.HiddenFor(m => item.Description)
+                            @Html.HiddenFor(m => item.Price)
+                            <button type="submit">Add to Order</button>
+                        }
                     </div>
                 }
             </div>
@@ -36,7 +47,7 @@
         <div class="stock-section">
             <h2>Out of Stock</h2>
             <div class="items-container">
-                @foreach (var item in Model.Where(p => !p.IsInStock))
+                @foreach (var item in Model.MainPageModel.Where(p => !p.IsInStock))
                 {
                     <div class="item-card">
                         <strong>@item.Name</strong><br>
@@ -53,3 +64,10 @@
     </footer> *@
 </body>
 </html>
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+        @{TempData["Message"] = null;}
+    </script>
+}

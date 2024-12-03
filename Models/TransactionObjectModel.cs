@@ -7,12 +7,14 @@ namespace MyCraft_Inventory.Models
 {
     public class TransactionObjectModel
     {
-        public required DateTime Date {get; set;}
+        public required DateTime Date { get; set; }
 
-        public required int ID {get; set;}
+        public required int ID { get; set; }
 
-        public required double Amount {get; set;}
+        public required double Amount { get; set; }
 
-        public required bool IsSale {get; set;}
+        public required bool IsSale { get; set; }
+
+        public required string UserId { get; set; }
     }
 }
