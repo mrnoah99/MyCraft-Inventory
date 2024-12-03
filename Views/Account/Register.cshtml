@@ -2,12 +2,14 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="/css/styles.css" asp-append-version="true">
 </head>
+
 <body>
     @* <header>
         <nav>
@@ -16,6 +18,13 @@
         </nav>
     </header> *@
 
+    @* <nav class="navbar">
+        <a href="/Home/Privacy">Privacy</a> <!-- Active link -->
+        <a href="/Account/Login">Login</a>
+    </nav> *@
+
+
+
     <div class="main-content">
         <div class="login-container">
             <h1>MyCraft Inventory</h1>
@@ -23,19 +32,19 @@
             @using (Html.BeginForm("Register", "Account", FormMethod.Post))
             {
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                
+
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-input", placeholder = "Email" })
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                
+
                 @Html.TextBoxFor(m => m.Username, new { @class = "form-input", placeholder = "Username" })
                 @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-                
+
                 @Html.PasswordFor(m => m.Password, new { @class = "form-input", placeholder = "Password" })
                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                
+
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-input", placeholder = "Confirm Password" })
                 @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-                
+
                 <button type="submit" class="login-button">Register</button>
             }
         </div>
@@ -45,4 +54,13 @@
         <p>&copy; 2024 - MyCraft_Inventory - <a href="/Home/Privacy">Privacy</a></p>
     </footer> *@
 </body>
+
+@* <script>
+    document.querySelectorAll('.navbar a').forEach(link => {
+    if (link.href === window.location.href) {
+        link.classList.add('active');
+    }
+});
+</script> *@
+
 </html>
